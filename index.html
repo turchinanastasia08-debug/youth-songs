@@ -69,12 +69,16 @@ const list = document.getElementById("songList");
 
 function loadSongs() {
   list.innerHTML = "";
-  for (let title in songs) {
+  // Створюємо список назв та сортуємо їх
+  const sortedTitles = Object.keys(songs).sort();
+
+  sortedTitles.forEach(title => {
     const li = document.createElement("li");
     li.textContent = title;
     li.onclick = () => openSong(title);
     list.appendChild(li);
-  }
+  });
+}
 }
 
 function openSong(title) {
@@ -106,13 +110,18 @@ function closeSong() {
 function searchSongs() {
   const value = document.getElementById("search").value.toLowerCase();
   list.innerHTML = "";
-  for (let title in songs) {
+  // Сортуємо всі назви перед тим, як фільтрувати їх для пошуку
+  const sortedTitles = Object.keys(songs).sort();
+
+  sortedTitles.forEach(title => {
     if (title.toLowerCase().includes(value)) {
       const li = document.createElement("li");
       li.textContent = title;
       li.onclick = () => openSong(title);
       list.appendChild(li);
     }
+  });
+}
   }
 }
 
