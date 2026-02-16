@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Молодіжний Збірник</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    body { font-family: Arial; padding: 15px; }
+    li { cursor: pointer; margin: 8px 0; }
+    pre { white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+
+<h1>Молодіжний Збірник</h1>
+
+<input type="text" id="search" placeholder="Пошук..." onkeyup="searchSongs()">
+
+<ul id="songList"></ul>
+
+<pre id="songContent"></pre>
+
+<script>
+const songs = {
+  "Боже Ти великий": `C      G
+Боже Ти великий...
+Am     F
+Славлю Тебе...`,
+
+  "Світло світу": `G      D
+Світло світу...
+Em     C
+Ти зі мною...`
+};
+
+const list = document.getElementById("songList");
+
+function loadSongs() {
+  list.innerHTML = "";
+  for (let title in songs) {
+    const li = document.createElement("li");
+    li.textContent = title;
+    li.onclick = () => openSong(title);
+    list.appendChild(li);
+  }
+}
+
+function openSong(title) {
+  document.getElementById("songContent").textContent = songs[title];
+}
+
+function searchSongs() {
+  const value = document.getElementById("search").value.toLowerCase();
+  list.innerHTML = "";
+  for (let title in songs) {
+    if (title.toLowerCase().includes(value)) {
+      const li = document.createElement("li");
+      li.textContent = title;
+      li.onclick = () => openSong(title);
+      list.appendChild(li);
+    }
+  }
+}
+
+loadSongs();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js');
+}
+</script>
+
+</body>
+</html>
